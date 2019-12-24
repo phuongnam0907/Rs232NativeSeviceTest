@@ -4,7 +4,7 @@ interface IUartmgrd {
     int setSerialPortParams(int baudrate,int dataBits,int stopBits,char parity);
     int open(String portName);
     void close(int fd);
-    int read_data(out byte[] buf, int bufsize, int timeout);
+    byte[] read_data(int bufsize, int timeout);
     int read(out byte[] buf, int bufsize);
     int select(int timeOut);
     int setBlock(int blockmode);

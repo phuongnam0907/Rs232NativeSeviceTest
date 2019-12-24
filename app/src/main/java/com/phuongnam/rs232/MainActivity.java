@@ -93,18 +93,14 @@ public class MainActivity extends AppCompatActivity {
         read.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                byte[] buf = new byte[2048];
-                int n = 0;
                 try {
-                    n = uartmgrd.read_data(buf, buf.length, 100);
+                    byte[] buf = uartmgrd.read_data(2048, 100);
+                    int n =buf.length;
                     if (n > 0){
                         text.setText("Size is " + n + " - Data: ");
                         for (int i = 0; i < n; i++) text.setText(text.getText() + new Character((char)buf[i]).toString());
                     }
-                    else
-                    {
-                        Log.e("uart", "No Data...");
-                    }
+                    else Log.e("uart", "No Data...");
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -115,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 byte[] buf = "One#2$Thr33%".getBytes();
-                text.setText(text.getText() + "\nWrite: \"One#2$Thr33%\"");
+                text.setText("\nWrite: \"One#2$Thr33%\"");
                 try {
                     uartmgrd.write_data(buf, buf.length);
                 } catch (RemoteException e) {
@@ -144,15 +140,5 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(MainActivity.this, TAG + "uartmgrd not found; trying again", Toast.LENGTH_SHORT).show();
         }
-    }
-}
-
-class ParcelableUtil {
-    public static byte[] marshall(Parcelable parcelable) {
-        Parcel parcel = Parcel.obtain();
-        parcelable.writeToParcel(parcel,0);
-        byte[] bytes = parcel.marshall();
-        parcel.recycle();
-        return bytes;
     }
 }
