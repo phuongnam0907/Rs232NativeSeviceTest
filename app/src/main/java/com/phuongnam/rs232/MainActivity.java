@@ -108,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
-//                text.setText(Integer.toString(buf[0]));
             }
         });
 
